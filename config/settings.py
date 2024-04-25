@@ -128,6 +128,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Отвечает за формирование адреса доступа к статике
 STATIC_URL = 'static/'
 # Отвечает за место на диске, откуда необходимо подгружать статику
+STATICFILES_DIRS = (
+    BASE_DIR / 'static',
+)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
