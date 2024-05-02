@@ -169,13 +169,13 @@
 
 <main>
 
-  <section class="py-5 text-center container">
-    <div class="row py-lg-5">
+  <section class="py-2 text-center container">
+    <div class="row py-lg-2">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">Магазин полезного ПО</h1>
         <p class="lead text-body-secondary">Разрабатываем по индивидуальному заказу любое программное обеспечение</p>
         <p>
-          <a href="#" class="btn btn-primary my-2">Акция дня</a>
+          <a href="{% url 'catalog:list' %}" class="btn btn-primary my-2">На главную</a>
           <a href="{% url 'blogpost:list' %}" class="btn btn-success my-2">Статьи</a>
         </p>
       </div>

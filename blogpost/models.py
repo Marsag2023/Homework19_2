@@ -8,13 +8,12 @@ class BlogPost(models.Model):
     content = models.TextField(verbose_name='Содержание', **NULLABLE)
     image = models.ImageField(upload_to='blogpost/', verbose_name='Изображение', **NULLABLE)
     created_at = models.DateField(auto_now_add=True, verbose_name='Дата создания', **NULLABLE)
-    publication_sign = models.BooleanField(default=True, verbose_name='Опубликована')
+    is_active = models.BooleanField(default=True)
     number_of_views = models.IntegerField(default=0, verbose_name='Количество просмотров')
-    slug = models.CharField(max_length=200, verbose_name='url')
+    slug = models.CharField(max_length=200, verbose_name='slug', **NULLABLE)
 
     def __str__(self):
         return f"{self.title} {self.slug} {self.content}"
-
 
     class Meta:
         verbose_name = 'Статья'

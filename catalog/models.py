@@ -24,6 +24,7 @@ class Product(models.Model):
     price = models.IntegerField(verbose_name='Цена')
     created_at = models.DateField(verbose_name='Дата создания продукта')
     updated_at = models.DateField(verbose_name='Дата релиза продукта', **NULLABLE)
+    number_of_views = models.IntegerField(default=0, verbose_name='Количество просмотров')
 
     def __str__(self):
         return f'Наименование: {self.name}, Категория: {self.category}'

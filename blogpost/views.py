@@ -23,7 +23,7 @@ class BlogPostListView(ListView):
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
-        queryset = queryset.filter(publication_sign=True)
+        queryset = queryset.filter(is_active=True)
         return queryset
 
 
@@ -40,7 +40,6 @@ class BlogPostDetailView(DetailView):
 class BlogPostUpdateView(UpdateView):
     model = BlogPost
     fields = ('title', 'content', 'image')
-#    success_url = reverse_lazy('blogpost:list')
 
     def form_valid(self, form):
         if form.is_valid():
@@ -60,9 +59,9 @@ class BlogPostDeleteView(DeleteView):
 
 def toggle_activity(request, pk):
     blogpost_item = get_object_or_404(BlogPost, pk=pk)
-    if blogpost_item.publication_sign:
-        blogpost_item.publication_sign = False
+    if blogpost_item.is_active:
+        blogpost_item.is_active = False
     else:
-        blogpost_item.publication_sign = True
+        blogpost_item.is_active = True
     blogpost_item.save()
     return redirect(reverse('blogpost:list'))
