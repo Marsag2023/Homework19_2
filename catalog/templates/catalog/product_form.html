@@ -1,0 +1,47 @@
+{% extends 'catalog/home.html' %}
+{% load static %}
+{% block content %}
+<div class="col-12">
+    <form class="row" method="post" id="createForm" enctype="multipart/form-data">
+        <section class="text-center">
+        <p>
+        {% if object %}
+        <button type="submit" class="btn btn-primary my-3">Редактировать</button>
+        {% else %}
+        <button type="submit" class="btn btn-primary my-3">Создать</button>
+        {% endif %}
+        </p>
+         </section>
+        <div class="col-5">
+            <div class="card">
+                <div class="card-header text-center">
+                        {% if object %}
+                        <h4 class="my-0 font-weight-normal">Панель редактирования товара</h4>
+                        {% else %}
+                        <h4 class="my-0 font-weight-normal">Панель создания товара</h4>
+                        {% endif %}
+                    <div class="card-body text-center">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                    </div>
+                </div>
+            </div>
+        </div>>
+        <div class="col-5">
+            <div class="card">
+                <div class="card-header text-center">
+                    <div class="card-body text-center">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ formset.management_form }}
+                            {% for form in formset.forms %}
+                            {{ form.as_p }}
+                        {% endfor %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
