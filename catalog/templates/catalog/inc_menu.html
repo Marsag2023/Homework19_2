@@ -20,11 +20,16 @@
             <div class="col-sm-4 offset-md-1 py-4">
                 <h4>Навигация</h4>
                 <ul class="list-unstyled">
-                    <li><a href="#" class="text-white">Вход</a></li>
                     <li><a href="{% url 'catalog:list' %}" class="text-white">На главную</a></li>
-                    <li><a href="{% url 'catalog:contacts_list' %}" class="text-white">Регистрация</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'users:logout' %}" class="text-white">Выход</a></li>
+                    <li><a href="{% url 'users:profile' %}" class="text-white">Редактирование профиля</a></li>
+                    {% else %}
+                    <li><a href="{% url 'users:login' %}" class="text-white">Вход</a></li>
+                    <li><a href="{% url 'users:register' %}" class="text-white">Регистрация</a></li>
+                    {% endif %}
                     <li><a href="{% url 'blogpost:list' %}" class="text-white">Статьи</a></li>
-                    <li><a href="#" class="text-white">Задайте вопрос</a></li>
+                    <li><a href="{% url 'catalog:contacts_list' %}" class="text-white">Задайте вопрос</a></li>
                 </ul>
             </div>
         </div>

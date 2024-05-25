@@ -13,10 +13,12 @@
                         <li>- {{ object.created_at }}</li>
                     </ul>
                     <div class="btn-group">
+                        {% if user.is_authenticated %}
                         <a href="{% url 'blogpost:edit' object.pk %}"
                            class="btn btn-sm btn-outline-primary">Править</a>
                         <a href="{% url 'blogpost:delete' object.pk %}"
                            class="btn btn-sm btn-outline-danger">Удалить</a>
+                        {% endif %}
                         <a href="{% url 'blogpost:list' %}"
                            class="btn btn-sm btn-outline-success">Назад</a>
                     </div>

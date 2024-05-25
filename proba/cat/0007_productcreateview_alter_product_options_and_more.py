@@ -14,9 +14,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ProductCreateView',
             fields=[
-                ('product_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='catalog.product')),
+                ('product_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='users.product')),
             ],
-            bases=('catalog.product',),
+            bases=('users.product',),
         ),
         migrations.AlterModelOptions(
             name='product',
@@ -60,7 +60,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='product',
             name='category',
-            field=models.ForeignKey(help_text='Выберите категорию продукта', on_delete=django.db.models.deletion.CASCADE, related_name='products', to='catalog.category', verbose_name='Категория'),
+            field=models.ForeignKey(help_text='Выберите категорию продукта', on_delete=django.db.models.deletion.CASCADE, related_name='products', to='users.category', verbose_name='Категория'),
         ),
         migrations.AlterField(
             model_name='product',
@@ -94,7 +94,7 @@ class Migration(migrations.Migration):
                 ('version_number', models.PositiveIntegerField(help_text='Введите номер версии продукта', verbose_name='Номер версии')),
                 ('version_name', models.CharField(help_text='Введите название версии продукта', max_length=150, verbose_name='Название версии')),
                 ('version_now', models.BooleanField(default=True, verbose_name='Признак текущей версии')),
-                ('product', models.ForeignKey(help_text='Выберите продукт', on_delete=django.db.models.deletion.CASCADE, related_name='versions', to='catalog.product', verbose_name='Продукт')),
+                ('product', models.ForeignKey(help_text='Выберите продукт', on_delete=django.db.models.deletion.CASCADE, related_name='versions', to='users.product', verbose_name='Продукт')),
             ],
             options={
                 'verbose_name': 'Версия',

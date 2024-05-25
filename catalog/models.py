@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 NULLABLE = {'null': True, 'blank': True}
 
 
@@ -26,11 +28,11 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория', related_name="products",
                                  help_text='Выберите категорию продукта')
     price = models.IntegerField(verbose_name='Цена', help_text='Введите цену продукта')
-    created_at = models.DateField(verbose_name='Дата создания продукта',
-                                  help_text='Выберите дату создания продукта')
-    updated_at = models.DateField(verbose_name='Дата релиза продукта', **NULLABLE,
-                                  help_text='Выберите дату релиза продукта')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата создания релиза')
+
     number_of_views = models.IntegerField(default=0, verbose_name='Количество просмотров')
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Владелец', **NULLABLE)
 
     def __str__(self):
         return f'Наименование: {self.name}, Категория: {self.category}'

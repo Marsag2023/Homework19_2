@@ -26,7 +26,7 @@ class StyleFormMixin:
 class ProductForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Product
-        exclude = ("number_of_views",)
+        exclude = ("number_of_views", "owner")
 
     def clean_name(self):
         cleaned_data = self.cleaned_data['name']

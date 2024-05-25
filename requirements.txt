@@ -1,8 +1,10 @@
 asgiref==3.8.1
-Django==5.0.4
+Django==4.2.2
 sqlparse==0.5.0
 tzdata==2024.1
 psycopg2==2.9.9
 Pillow==10.3.0
 ipython==8.23.0
 pytils
+django-phonenumber-field==7.3.0
+django-countries==7.6.1

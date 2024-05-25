@@ -24,7 +24,7 @@ class Command(BaseCommand):
         product_for_create = []
 
         for category in Command.json_read_categories():
-            if category["model"] == "catalog.category":
+            if category["model"] == "users.category":
                 category_for_create.append(
                     Category(category=category["fields"]["category"],
                              description=category["fields"]["description"]))
@@ -32,7 +32,7 @@ class Command(BaseCommand):
         Category.objects.bulk_create(category_for_create)
 
         for product in Command.json_read_products():
-            if product["model"] == "catalog.product":
+            if product["model"] == "users.product":
                 product_for_create.append(
                     Product(name=product["fields"]["name"],
                             description=product["fields"]["description"],
