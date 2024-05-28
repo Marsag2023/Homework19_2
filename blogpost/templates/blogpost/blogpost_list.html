@@ -3,15 +3,9 @@
 {% block content %}
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
-        {% if user.is_authenticated %}
         <p>
             <a href="{% url 'blogpost:create' %}" class="btn btn-primary my-2">Добавить статью</a>
         </p>
-         {% else %}
-      <p>
-        <a class="btn btn-danger my-2">Добавлять или редактировать статьи могут только авторизованные пользователи </a>
-      </p>
-      {% endif %}
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for object in object_list %}
             <div class="col-md-4">
@@ -24,21 +18,17 @@
                             <div class="btn-group">
                                 <a href="{% url 'blogpost:view' object.pk %}" type="button"
                                    class="btn btn-sm btn-outline-primary">Посмотреть</a>
-                                 {% if user.is_authenticated %}
                                 <a href="{% url 'blogpost:edit' object.pk %}" type="button"
                                    class="btn btn-sm btn-outline-warning">Редактировать</a>
                                 <a href="{% url 'blogpost:delete' object.pk %}" type="button"
                                    class="btn btn-sm btn-outline-danger">Удалить</a>
-                                {% endif %}
                             </div>
-                            {% if user.is_authenticated %}
                             {% if object.is_active %}
                             <a class="btn btn-sm btn-warning"
                                href="{% url 'blogpost:toggle_activity' object.pk %}">Деактивировать</a>
                             {% else %}
                             <a class="btn btn-sm btn-success"
                                href="{% url 'blogpost:toggle_activity' object.pk %}">Активировать</a>
-                            {% endif %}
                             {% endif %}
                         </div>
                     </div>

@@ -8,10 +8,12 @@ from catalog.forms import ProductForm, VersionForm
 from catalog.models import Product, Contacts, Version
 
 
-class ProductCreateView(CreateView, LoginRequiredMixin):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:list')
+    login_url = "/users/login/"
+    redirect_field_name = "login"
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -35,16 +37,6 @@ class ProductCreateView(CreateView, LoginRequiredMixin):
             return super().form_valid(form)
         else:
             return self.form_invalid(form)
-        # context = self.get_context_data()
-        # formset = context['formset']
-        # if formset.is_valid():
-        #     self.object = form.save()
-        #     formset.instance = self.object
-        #     formset.save()
-        #     return super(ProductCreateView, self).form_valid(form)
-        # else:
-        #     return self.form_invalid(form)
-
 
 class ProductListView(ListView):
     model = Product
@@ -64,8 +56,10 @@ class ProductListView(ListView):
         return context_data
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
+    login_url = "/users/login/"
+    redirect_field_name = "login"
     template_name = 'catalog/product_detail.html'
 
     def get_object(self, queryset=None):
@@ -88,10 +82,12 @@ class ProductDetailView(DetailView):
         return context_data
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:list')
+    login_url = "/users/login/"
+    redirect_field_name = "login"
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
