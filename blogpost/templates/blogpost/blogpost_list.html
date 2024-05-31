@@ -4,7 +4,9 @@
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
         <p>
+            {% if perms.blogpost.add_blogpost %}
             <a href="{% url 'blogpost:create' %}" class="btn btn-primary my-2">Добавить статью</a>
+            {% endif %}
         </p>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for object in object_list %}
@@ -18,11 +20,14 @@
                             <div class="btn-group">
                                 <a href="{% url 'blogpost:view' object.pk %}" type="button"
                                    class="btn btn-sm btn-outline-primary">Посмотреть</a>
+                                {% if perms.blogpost.change_blogpost and perms.blogpost.delete_blogpost %}
                                 <a href="{% url 'blogpost:edit' object.pk %}" type="button"
                                    class="btn btn-sm btn-outline-warning">Редактировать</a>
                                 <a href="{% url 'blogpost:delete' object.pk %}" type="button"
                                    class="btn btn-sm btn-outline-danger">Удалить</a>
+                                {% endif %}
                             </div>
+                            {% if perms.blogpost.add_blogpost and perms.blogpost.change_blogpost and perms.blogpost.delete_blogpost %}
                             {% if object.is_active %}
                             <a class="btn btn-sm btn-warning"
                                href="{% url 'blogpost:toggle_activity' object.pk %}">Деактивировать</a>
@@ -30,6 +35,8 @@
                             <a class="btn btn-sm btn-success"
                                href="{% url 'blogpost:toggle_activity' object.pk %}">Активировать</a>
                             {% endif %}
+                            {% endif %}
+
                         </div>
                     </div>
                 </div>

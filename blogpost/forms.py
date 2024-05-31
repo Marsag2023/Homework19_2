@@ -6,4 +6,4 @@ from blogpost.models import BlogPost
 class BlogPostForm(ModelForm):
     class Meta:
         model = BlogPost
-        exclude = ("number_of_views",)
+        exclude = ("slug", "created_at", "number_of_views",)

@@ -14,6 +14,7 @@
                         <p class="card-text">Дата создания продукта: {{ object.created_at }}</p>
                         <p class="card-text">Дата релиза: {{ object.updated_at }}</p>
                         <p>Активная версия: {{ object.active_version }}</p>
+                        <p>Владелец: {{ object.owner }}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a class="btn btn-primary" href="{% url 'catalog:list' %}" role="button">На главную</a>

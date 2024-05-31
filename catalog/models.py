@@ -33,6 +33,7 @@ class Product(models.Model):
 
     number_of_views = models.IntegerField(default=0, verbose_name='Количество просмотров')
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Владелец', **NULLABLE)
+    publication = models.BooleanField(default=False, verbose_name='Публикация')
 
     def __str__(self):
         return f'Наименование: {self.name}, Категория: {self.category}'
@@ -40,6 +41,12 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+
+        permissions = [
+            ('unpublish_product', 'Unpublish a product'),
+            ('change_product_description', 'Change the description of any product'),
+            ('change_product_category', 'Change the category of any product'),
+        ]
 
     def form_valid(self, form):
         pass
