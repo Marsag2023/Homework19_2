@@ -25,7 +25,7 @@
                             <div class="btn-group">
                                 <a class="btn btn-primary" href="{% url 'catalog:view' object.pk %}" role="button">Посмотреть</a>
                                 {% if perms.catalog.unpublish_product and perms.catalog.change_product_description and perms.catalog.change_product_category or user == object.owner%}
-                                <a class="btn btn-warning" href="{% url 'catalog:edit' object.pk %}" role="button">Редактировать</a>
+                                    <a class="btn btn-warning" href="{% url 'catalog:edit' object.pk %}" role="button">Редактировать</a>
                                 {% endif %}
                             </div>
                             <small class="text-body-secondary"></small>

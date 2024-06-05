@@ -6,7 +6,8 @@ from django.urls import reverse_lazy
 
 
 from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
-from catalog.models import Product, Contacts, Version
+from catalog.models import Product, Contacts, Version, Category
+from catalog.services import get_products_from_cache, get_categories_from_cache
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -42,6 +43,9 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 class ProductListView(ListView):
     model = Product
     template_name = 'catalog/product_list.html'
+
+    def get_queryset(self):
+        return get_products_from_cache()
 
     def get_context_data(self, *args, **kwargs):
         context_data = super().get_context_data(*args, **kwargs)
@@ -114,11 +118,29 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         user = self.request.user
         if user == self.object.owner:
             return ProductForm
-        print(user.email)
         if (user.has_perm('catalog.unpublish_product') and user.has_perm('catalog.change_product_description')
                 and user.has_perm('catalog.change_product_category')):
             return ProductModeratorForm
         raise PermissionDenied
+
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'catalog/category_list.html'
+
+    def get_queryset(self):
+        return get_categories_from_cache()
+
+class CategoryDetailView(DetailView):
+    model = Category
+    template_name = 'category/category_detail.html'
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['products'] = Product.objects.filter(category=self.object.id)
+        return context
+
 
 
 class ContactsCreateView(CreateView):
