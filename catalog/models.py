@@ -1,4 +1,5 @@
 from django.db import models
+from pytils.translit import slugify
 
 from users.models import User
 
@@ -6,13 +7,19 @@ NULLABLE = {'null': True, 'blank': True}
 
 
 class Category(models.Model):
-    category = models.CharField(max_length=100, verbose_name='Категория',
-                                help_text='Введите категорию продукта')
+    title = models.CharField(max_length=100, verbose_name='Категория',
+                             help_text='Введите категорию продукта')
     description = models.TextField(verbose_name='Описание', **NULLABLE,
                                    help_text='Введите описание категории продукта')
+    slug = models.SlugField(max_length=100, db_index=True, verbose_name='URL', **NULLABLE)
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.slug = slugify(self.category)
+        super(Category, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f'Категория: {self.category}'
+        return f'Категория: {self.title}'
 
     class Meta:
 
@@ -34,6 +41,12 @@ class Product(models.Model):
     number_of_views = models.IntegerField(default=0, verbose_name='Количество просмотров')
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name='Владелец', **NULLABLE)
     publication = models.BooleanField(default=False, verbose_name='Публикация')
+    slug = models.SlugField(max_length=100, db_index=True, verbose_name='URL', **NULLABLE)
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.slug = slugify(self.name)
+        super(Product, self).save(*args, **kwargs)
 
     def __str__(self):
         return f'Наименование: {self.name}, Категория: {self.category}'

@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
+from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.urls import reverse_lazy
 
@@ -39,6 +40,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
             return super().form_valid(form)
         else:
             return self.form_invalid(form)
+
 
 class ProductListView(ListView):
     model = Product
@@ -131,16 +133,20 @@ class CategoryListView(ListView):
     def get_queryset(self):
         return get_categories_from_cache()
 
-class CategoryDetailView(DetailView):
+
+class CategoryDetailView(LoginRequiredMixin, DetailView):
     model = Category
     template_name = 'category/category_detail.html'
 
+    def get(self, request, slug):
+        category = Category.objects.all()
+        products = Product.objects.filter(category__slug=slug)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data()
-        context['products'] = Product.objects.filter(category=self.object.id)
-        return context
-
+        context = {
+            'category': category,
+            'products': products,
+        }
+        return render(request, 'catalog/category_detail.html', context)
 
 
 class ContactsCreateView(CreateView):

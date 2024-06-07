@@ -1,6 +1,6 @@
 from django.forms import ModelForm, forms
 
-from catalog.models import Product, Version
+from catalog.models import Product, Version, Category
 from django.forms.fields import BooleanField
 forbidden_words = ['казино',
                    'криптовалюта',
@@ -60,3 +60,11 @@ class VersionForm(StyleFormMixin, ModelForm):
             if word in cleaned_data.lower():
                 raise forms.ValidationError(f'Нельзя использовать слова: {forbidden_words}')
         return cleaned_data
+
+
+
+
+class CategoryForm(StyleFormMixin,ModelForm):
+    class Meta:
+        model = Category
+        fields = "__all__"

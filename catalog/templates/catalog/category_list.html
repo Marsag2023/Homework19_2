@@ -1,0 +1,13 @@
+{% extends 'catalog/home.html' %}
+{% block content %}
+<section class="py-2 text-center container">
+<h1 class="head">Категории продуктов</h1>
+{% for cat in category_list %}
+<div>
+    <a href="{% url 'catalog:category_detail' cat.slug %}">
+        <h3>{{ cat.title }}</h3>
+    </a>
+</div>
+{% endfor %}
+  </section>
+{% endblock %}
